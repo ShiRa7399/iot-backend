@@ -1,14 +1,11 @@
+
 const mongoose = require("mongoose");
 
 const PredictionSchema = new mongoose.Schema({
 
-  device_id: String,
+  risk: String,
 
-  prediction: String,
-
-  confidence: Number,
-
-  timestamp: {
+  created_at: {
     type: Date,
     default: Date.now
   }
