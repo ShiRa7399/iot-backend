@@ -4,7 +4,7 @@ import joblib
 from datetime import datetime
 
 # connect to MongoDB
-client = MongoClient("YOUR_MONGODB_CONNECTION_STRING")
+client = MongoClient("mongodb+srv://iotuser:somethingstrong@cluster0.deiamrj.mongodb.net/?appName=Cluster0")
 
 db = client["iotdb"]
 
@@ -12,7 +12,7 @@ sensor_collection = db["sensordatas"]
 prediction_collection = db["predictions"]
 
 # load trained model
-model = joblib.load("sleep_apnea_model.pkl")
+model = joblib.load("model/sleep_apnea_model.pkl")
 
 # get ALL sensor data uploaded by ESP32
 data_cursor = sensor_collection.find({"device_id": "esp32_01"})
