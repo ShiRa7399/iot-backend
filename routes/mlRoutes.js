@@ -4,7 +4,7 @@ const { exec } = require("child_process");
 
 router.post("/run-analysis", (req, res) => {
 
-  exec("python3 predict_sleep.py", (error, stdout, stderr) => {
+  exec("python3 model/predict_sleep.py", (error, stdout, stderr) => {
 
     console.log("STDOUT:", stdout);
     console.log("STDERR:", stderr);
