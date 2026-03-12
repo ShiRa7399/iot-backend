@@ -28,8 +28,13 @@ df = pd.DataFrame(data_list)
 
 # select features used in training
 # map database fields to model inputs
-df['dummy'] = 0
-X = df[['mic_diff','accel_diff','gyro_diff','dummy']]
+# map sensor values to the feature names the model expects
+df['audio'] = df['mic_diff']
+df['ax'] = df['accel_diff']
+df['ay'] = df['gyro_diff']
+df['az'] = 0
+
+X = df[['audio','ax','ay','az']]
 
 # run ML prediction
 predictions = model.predict(X)
