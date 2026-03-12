@@ -27,7 +27,9 @@ if len(data_list) == 0:
 df = pd.DataFrame(data_list)
 
 # select features used in training
-X = df[['audio','ax','ay','az']]
+# map database fields to model inputs
+df['dummy'] = 0
+X = df[['mic_diff','accel_diff','gyro_diff','dummy']]
 
 # run ML prediction
 predictions = model.predict(X)
