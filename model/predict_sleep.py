@@ -15,7 +15,7 @@ prediction_collection = db["predictions"]
 model = joblib.load("model/sleep_apnea_model.pkl")
 
 # get ALL sensor data uploaded by ESP32
-data_cursor = sensor_collection.find({"device_id": "esp32_01"})
+data_cursor = sensor_collection.find({})
 
 data_list = list(data_cursor)
 
