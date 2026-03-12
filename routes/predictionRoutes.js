@@ -1,28 +1,29 @@
 const express = require("express");
 const router = express.Router();
-const { spawn } = require("child_process");
+const Prediction = require("../models/Prediction");
 
-router.get("/prediction", (req, res) => {
+router.get("/latest-risk", async (req, res) => {
 
-  const python = spawn("python3", ["ml/run_model.py"]);
+  try {
 
-  let result = "";
+    const latest = await Prediction
+      .findOne({ device_id: "esp32_01" })
+      .sort({ timestamp: -1 });
 
-  python.stdout.on("data", (data) => {
-    result += data.toString();
-  });
-
-  python.stderr.on("data", (data) => {
-    console.error(data.toString());
-  });
-
-  python.on("close", () => {
+    if (!latest) {
+      return res.json({ status: "No prediction yet" });
+    }
 
     res.json({
-      risk: result.trim()
+      status: latest.status,
+      apnea_events: latest.apnea_events,
+      total_samples: latest.total_samples,
+      apnea_ratio: latest.apnea_ratio
     });
 
-  });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 
 });
 
