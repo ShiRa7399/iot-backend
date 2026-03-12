@@ -6,7 +6,7 @@ from datetime import datetime
 # connect to MongoDB
 client = MongoClient("mongodb+srv://iotuser:somethingstrong@cluster0.deiamrj.mongodb.net/?appName=Cluster0")
 
-db = client["iotdb"]
+db = client["test"]
 
 sensor_collection = db["sensordatas"]
 prediction_collection = db["predictions"]
