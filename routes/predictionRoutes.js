@@ -1,49 +1,28 @@
 const express = require("express");
 const router = express.Router();
+const { spawn } = require("child_process");
 
-const Prediction = require("../models/Prediction");
+router.get("/prediction", (req, res) => {
 
-// POST prediction
-router.post("/prediction", async (req, res) => {
+  const python = spawn("python3", ["ml/run_model.py"]);
 
-  try {
+  let result = "";
 
-    const pred = new Prediction(req.body);
+  python.stdout.on("data", (data) => {
+    result += data.toString();
+  });
 
-    await pred.save();
+  python.stderr.on("data", (data) => {
+    console.error(data.toString());
+  });
 
-    res.json({
-      status: "stored"
-    });
-
-  } catch (err) {
-
-    res.status(500).json({
-      error: err.message
-    });
-
-  }
-
-});
-
-// GET latest prediction
-router.get("/prediction", async (req, res) => {
-
-  try {
-
-    const latest = await Prediction.findOne().sort({ created_at: -1 });
+  python.on("close", () => {
 
     res.json({
-      risk: latest.risk
+      risk: result.trim()
     });
 
-  } catch (err) {
-
-    res.status(500).json({
-      error: err.message
-    });
-
-  }
+  });
 
 });
 
