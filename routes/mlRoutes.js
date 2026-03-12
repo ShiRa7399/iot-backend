@@ -4,11 +4,15 @@ const { exec } = require("child_process");
 
 router.post("/run-analysis", (req, res) => {
 
-  exec("python predict_sleep.py", (error, stdout, stderr) => {
+  exec("python3 predict_sleep.py", (error, stdout, stderr) => {
+
+    console.log("STDOUT:", stdout);
+    console.log("STDERR:", stderr);
 
     if (error) {
-      console.error(stderr);
-      return res.status(500).json({ error: "ML execution failed" });
+      return res.status(500).json({
+        error: stderr || error.message
+      });
     }
 
     res.json({
