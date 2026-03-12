@@ -8,11 +8,13 @@ app.use(express.json());
 // import routes
 const sensorRoutes = require("./routes/sensorRoutes");
 const predictionRoutes = require("./routes/predictionRoutes");
+const mlRoutes = require("./routes/mlRoutes");
 
 
 // use routes
 app.use("/api", sensorRoutes);
 app.use("/api", predictionRoutes);
+app.use("/api", mlRoutes);
 
 // homepage message
 app.get("/", (req, res) => {
