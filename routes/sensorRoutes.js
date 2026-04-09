@@ -31,7 +31,10 @@ const SensorData = require("../models/SensorData");
 router.post("/sensor-data", async (req, res) => {
 
   try {
+    console.log("API HIT 🔥");
+    console.log("Body:", req.body);
 
+    res.send("received");
     const sensor = new SensorData(req.body);
 
     await sensor.save();
