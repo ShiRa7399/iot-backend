@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Prediction = mongoose.model("Prediction", schema);
 const Prediction = require("../models/Prediction");
 
 router.get("/latest-risk", async (req, res) => {
