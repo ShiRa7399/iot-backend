@@ -34,7 +34,12 @@ router.post("/sensor-data", async (req, res) => {
     console.log("API HIT 🔥");
     console.log("Body:", req.body);
 
-    res.send("received");
+    await SensorData.create(req.body);   // 🔥 THIS LINE IS IMPORTANT
+
+    console.log("Saved to DB ✅");
+
+    res.send("Saved");
+    
     const sensor = new SensorData(req.body);
 
     await sensor.save();
